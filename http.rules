@@ -1,0 +1,9 @@
+alert tcp any any -> any 80
+(
+    msg:"Interesting People lookup"; 
+    content:":"archives/interesting-people/"; 
+    content:"Host|3A| www.interesting-people.org"; 
+    sid:200999; 
+    rev:1; 
+    gid:1
+)

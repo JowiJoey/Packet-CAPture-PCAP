@@ -1,0 +1,14 @@
+alert tcp any any -> any 80
+(
+    msg: "RileyTech RAT";
+    content: "GET /Hunter.html HTTP/1.1"; rawbytes; nocase;
+    
+    # hexadecimal of www.rileytech.com
+    # this way theres no prepocessor going on 
+    content: "| 77 77 77 2E 72 69 6C 65 79 74 65 63 68 2E 63 6F 6D |"; rawbytes; distance: 80;
+    
+    sid: 200130900;
+    rev: 1;
+    gid: 1;
+    classtype: trojan-activity;
+)

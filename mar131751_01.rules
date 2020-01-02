@@ -1,0 +1,19 @@
+# HTTP request to the command and control (C2) server
+# http://80.96.120.22:443/ajkki.php?id=031B3B111D305252BC
+
+# the template would look like
+# http://<ip>:<port>/<5 random numbers>.php?id=<6 random numbers><victims MAC address>
+
+alert any any -> 80.96.120.22 {443, 79, 110}
+(
+    msg: "mar 131751 http rat";
+    content: "GET"; nocase;
+    content: "php?id=";
+    content: "80.96.120.22";
+    pcre: "GET \/[a-z]{5}\.php\?id\=[0-9]{6}[a-fA-F0-9]{12}";
+    flow: established;
+    reference: mar;
+    classtype: trojan-activity;
+    sid: 1001;
+    rev: 1;
+)

@@ -1,0 +1,15 @@
+alert tcp $EXTERNAL_NET any -> $HOME_NET $HTTP_PORTS
+(
+    msg: "WEB-PHP Joomla invalid token administrative password reset attempt";
+    flow: established, to_server;
+    uricontent: "task=confirmreset"; nocase;
+    uricontent: "option=com_user";
+    content: "token=%27&"; nocase;
+    metadata: policy balanced-ips drop, policy security-ips drop, service http;
+    reference: bugtraq, 20667;
+    reference: cve, 2008-3681;
+    reference: url, developer.joomla.org/security/news/241-20080801-core-password-remind-functionality.html;
+    classtype: attempted-admin;
+    sid: 14610;
+    rev: 1;
+)

@@ -1,0 +1,17 @@
+alert tcp $EXTERNAL_NET any -> $SMTP_SERVERS 25
+(
+    msg: "SMTP MAIL FROM sendmail prescan too long addresses overflow";
+    flow: to_server, established;
+    
+    content: "MAIL FROM |3A|";
+    nocase;
+
+    pcre: "/^MAIL FROM\x3a\s+[\w\s@\.] {200, }
+            \x3b[\w\s@\.] {200, }
+            \x3b[\w\s@\.] {200, }
+            /smi";
+    
+    classtype: attempted-admin;
+    sid: 2268;
+    rev: 8;
+)

@@ -1,0 +1,10 @@
+alert tcp $EXTERNAL_NET any -> $HOME_NET $HTTP_PORTS
+(
+    msg: "WEB Connect to bad stuff";
+    content: "super bad attack string";
+    flow: established, to_server;
+    reference: bugtraq, 20667;
+    classtyped: attempted-admin;
+    sid: 191919191;
+    rev: 1;
+)
